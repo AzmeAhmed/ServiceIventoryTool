@@ -1,3 +1,4 @@
+from lagring import las_in_servrar, spara_servrar
 gold_server = {
     "namn": "power" , 
     "adress": "10.232.12.10" ,
@@ -7,7 +8,7 @@ gold_server = {
     "senast_kontrollerad": "always"
 }
 
-namn_list = [gold_server]
+namn_list = las_in_servrar()
 
 while True:
     nytt_namn = input("Välj ett namn")
@@ -53,7 +54,6 @@ fresh_server = {
 
 namn_list.append(fresh_server)
 print("Den nya servern har lagts till! ")
-    
+spara_servrar(namn_list)    
 
     
-
