@@ -1,5 +1,8 @@
 import json
 import os
+from pathlib import Path
+from datetime import datetime
+
 
 def ladda_filnamn():
     if "INVENTORY_DATAFIL" in os.environ:
@@ -8,8 +11,8 @@ def ladda_filnamn():
         return "servrar.json"
 
 def las_in_servrar():
-    filnamn = ladda_filnamn()
-    if os.path.exists(filnamn):
+    filnamn = Path(ladda_filnamn())
+    if filnamn.exists():
         min_fil = open(filnamn, "r")
         servrar = json.load(min_fil)
         min_fil.close()
@@ -27,7 +30,9 @@ def exportera_till_csv(namn_list):
     if not os.path.exists("rapporter"):
         os.makedirs("rapporter")
         
-    csv_namn = "rapporter/inventering_export.csv"
+    nu = datetime.now()
+    tid = str(nu.year) + "-" + str(nu.month) + "-" + str(nu.day) + "_" + str(nu.hour) + str(nu.minute)
+    csv_namn = "rapporter/inventering_" + tid + ".csv"
     
     min_fil = open(csv_namn, "w")
     min_fil.write("namn,adress,miljo,roll,status,senast_kontrollerad\n")
