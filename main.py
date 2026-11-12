@@ -1,4 +1,4 @@
-from lagring import las_in_servrar, spara_servrar
+from lagring import las_in_servrar, spara_servrar, exportera_till_csv
 gold_server = {
     "namn": "power" , 
     "adress": "10.232.12.10" ,
@@ -55,5 +55,5 @@ fresh_server = {
 namn_list.append(fresh_server)
 print("Den nya servern har lagts till! ")
 spara_servrar(namn_list)    
-
+exportera_till_csv(namn_list)
     
