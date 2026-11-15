@@ -2,6 +2,7 @@ from lagring import spara_servrar, exportera_till_csv
 from kontroller import kontrollera_en_server, kontrollera_alla_servrar
 
 def skriv_ut_servrar(server_lista):
+    # :<15 gör att varje kolumn blir 15 tecken bred och står rakt
     print(f"{'NAMN':<15} {'ADRESS':<15} {'MILJO':<15} {'ROLL':<15} {'STATUS':<15} {'KONTROLLERAD':<15}")
     for x in server_lista:
         print(f"{x['namn']:<15} {x['adress']:<15} {x['miljo']:<15} {x['roll']:<15} {x['status']:<15} {x['senast_kontrollerad']:<15}")
@@ -11,6 +12,13 @@ def hitta_server(server_lista, sokt_namn):
         if x["namn"] == sokt_namn:
             return x
     return None
+
+def filtrera_miljo(server_lista, miljo):
+    filtrerad_lista = []
+    for x in server_lista:
+        if x["miljo"] == miljo:
+            filtrerad_lista.append(x)
+    return filtrerad_lista
 
 def kor_meny(namn_list):
     giltiga_miljoer = ["test", "dev", "prod"]
@@ -32,11 +40,8 @@ def kor_meny(namn_list):
 
         elif val == "2":
             vald_miljo = input("Vilken miljö vill du se: ")
-            filtrerad_lista = []
-            for x in namn_list:
-                if x["miljo"] == vald_miljo:
-                    filtrerad_lista.append(x)
-            skriv_ut_servrar(filtrerad_lista)
+            filtrerad = filtrera_miljo(namn_list, vald_miljo)
+            skriv_ut_servrar(filtrerad)
 
         elif val == "3":
             while True:
@@ -84,6 +89,7 @@ def kor_meny(namn_list):
             ta_bort = input("Vilken server vill du ta bort: ")
             server = hitta_server(namn_list, ta_bort)
             if server != None:
+                # Extra bekräftelse krävs om servern ligger i prod
                 if server["miljo"] == "prod":
                     svar = input("Servern är i prod, är du säker (ja/nej): ")
                     if svar == "ja":
