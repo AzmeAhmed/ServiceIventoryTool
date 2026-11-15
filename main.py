@@ -2,6 +2,11 @@ import sys
 from lagring import las_in_servrar, spara_servrar, exportera_till_csv
 from kontroller import kontrollera_en_server, kontrollera_alla_servrar
 
+def skriv_ut_servrar(server_lista):
+    print(f"{'NAMN':<15} {'ADRESS':<15} {'MILJO':<15} {'ROLL':<15} {'STATUS':<15} {'KONTROLLERAD':<15}")
+    for x in server_lista:
+        print(f"{x['namn']:<15} {x['adress']:<15} {x['miljo']:<15} {x['roll']:<15} {x['status']:<15} {x['senast_kontrollerad']:<15}")
+
 def hitta_server(server_lista, sokt_namn):
     for x in server_lista:
         if x["namn"] == sokt_namn:
@@ -25,14 +30,15 @@ if len(sys.argv) == 1:
         val = input("Välj ett alternativ: ")
 
         if val == "1":
-            for x in namn_list:
-                print(x)
+            skriv_ut_servrar(namn_list)
 
         elif val == "2":
             vald_miljo = input("Vilken miljö vill du se: ")
+            filtrerad_lista = []
             for x in namn_list:
                 if x["miljo"] == vald_miljo:
-                    print(x)
+                    filtrerad_lista.append(x)
+            skriv_ut_servrar(filtrerad_lista)
 
         elif val == "3":
             while True:
