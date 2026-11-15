@@ -5,6 +5,7 @@ from datetime import datetime
 
 
 def ladda_filnamn():
+    # Check if a custom data file is set via environment variable
     if "INVENTORY_DATAFIL" in os.environ:
         return os.environ["INVENTORY_DATAFIL"]
     else:
@@ -27,6 +28,7 @@ def spara_servrar(namn_list):
     min_fil.close()
 
 def exportera_till_csv(namn_list):
+    # Create the rapporter folder if it does not exist
     if not os.path.exists("rapporter"):
         os.makedirs("rapporter")
         
