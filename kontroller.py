@@ -4,11 +4,13 @@ from datetime import datetime
 from lagring import spara_servrar
 
 def kontrollera_en_server(server, namn_list):
+    # Windows uses -n for ping count, Mac/Linux uses -c
     if os.name == "nt":
         resultat = subprocess.run(["ping", "-n", "1", server["adress"]])
     else:
         resultat = subprocess.run(["ping", "-c", "1", server["adress"]])
 
+    # Return code 0 means the ping succeeded
     if resultat.returncode == 0:
         server["status"] = "up"
     else:

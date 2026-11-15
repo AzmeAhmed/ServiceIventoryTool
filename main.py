@@ -29,7 +29,7 @@ def main():
         if server != None:
             kontrollera_en_server(server, namn_list)
             print("Servern är kontrollerad!")
-            # Returnera exit-kod 1 om servern inte svarar på ping
+            # Return exit code 1 if the server did not respond to ping
             if server["status"] == "down":
                 sys.exit(1)
             else:
@@ -56,6 +56,7 @@ def main():
         sys.exit(0)
 
     else:
+        # Start the interactive text menu if no CLI flags were given
         kor_meny(namn_list)
         sys.exit(0)
 
