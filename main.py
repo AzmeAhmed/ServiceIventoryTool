@@ -69,7 +69,7 @@ if len(sys.argv) == 1:
                 "miljo": gissning,
                 "roll": ny_roll,
                 "status": "unknown",
-                "senast_kontrollerad": "always"
+                "senast_kontrollerad": ""
             }
 
             namn_list.append(fresh_server)
@@ -83,6 +83,8 @@ if len(sys.argv) == 1:
                 namn_list.remove(server)
                 spara_servrar(namn_list)
                 print("Servern har tagits bort!")
+            else:
+                print("Servern finns inte!")
 
         elif val == "5":
             koll_namn = input("Vilken server vill du kontrollera: ")
@@ -90,6 +92,8 @@ if len(sys.argv) == 1:
             if server != None:
                 kontrollera_en_server(server, namn_list)
                 print("Servern är kontrollerad!")
+            else:
+                print("Servern finns inte!")
 
         elif val == "6":
             kontrollera_alla_servrar(namn_list)
@@ -102,4 +106,6 @@ if len(sys.argv) == 1:
         elif val == "8":
             print("Programmet avslutas")
             break
-    
+
+        else:
+            print("Ogiltigt val, försök igen!")
