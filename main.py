@@ -80,9 +80,18 @@ if len(sys.argv) == 1:
             ta_bort = input("Vilken server vill du ta bort: ")
             server = hitta_server(namn_list, ta_bort)
             if server != None:
-                namn_list.remove(server)
-                spara_servrar(namn_list)
-                print("Servern har tagits bort!")
+                if server["miljo"] == "prod":
+                    svar = input("Servern är i prod, är du säker (ja/nej): ")
+                    if svar == "ja":
+                        namn_list.remove(server)
+                        spara_servrar(namn_list)
+                        print("Servern har tagits bort!")
+                    else:
+                        print("Avbrutet!")
+                else:
+                    namn_list.remove(server)
+                    spara_servrar(namn_list)
+                    print("Servern har tagits bort!")
             else:
                 print("Servern finns inte!")
 
