@@ -1,59 +1,105 @@
+import sys
 from lagring import las_in_servrar, spara_servrar, exportera_till_csv
-gold_server = {
-    "namn": "power" , 
-    "adress": "10.232.12.10" ,
-    "miljo": "test" ,
-    "roll": "fotboll" ,
-    "status": "unknown" ,
-    "senast_kontrollerad": "always"
-}
+from kontroller import kontrollera_en_server, kontrollera_alla_servrar
+
+def hitta_server(server_lista, sokt_namn):
+    for x in server_lista:
+        if x["namn"] == sokt_namn:
+            return x
+    return None
 
 namn_list = las_in_servrar()
+giltiga_miljoer = ["test", "dev", "prod"]
 
-while True:
-    nytt_namn = input("Välj ett namn")
+if len(sys.argv) == 1:
+    while True:
+        print("\n1. Visa alla servrar")
+        print("2. Visa servrar i en viss miljö")
+        print("3. Lägga till en server")
+        print("4. Ta bort en server")
+        print("5. Kontrollera en server")
+        print("6. Kontrollera alla servrar")
+        print("7. Exportera rapport som CSV")
+        print("8. Avsluta")
 
-    annat_namn = False
+        val = input("Välj ett alternativ: ")
 
-    for x in namn_list: 
-        if x["namn"] == nytt_namn:
-            annat_namn = True   
+        if val == "1":
+            for x in namn_list:
+                print(x)
 
-    if annat_namn == True:
-        print("Namnet redan registrerad testa igen:")
+        elif val == "2":
+            vald_miljo = input("Vilken miljö vill du se: ")
+            for x in namn_list:
+                if x["miljo"] == vald_miljo:
+                    print(x)
 
-    else:
-        print("Nya namnet är nytt så den kan läggas till")
-        break
+        elif val == "3":
+            while True:
+                nytt_namn = input("Välj ett namn: ")
 
+                annat_namn = False
 
-giltiga_miljoer = ["test" , "dev" , "prod"]
-giltiga_statusar = ["unknown" , "down" , "up"]
+                for x in namn_list:
+                    if x["namn"] == nytt_namn:
+                        annat_namn = True
 
-while True:
+                if annat_namn == True:
+                    print("Namnet redan registrerad testa igen:")
 
-    gissning = input("Välj en miljö: ")
+                else:
+                    print("Nya namnet är nytt så den kan läggas till")
+                    break
 
-    if gissning in giltiga_miljoer:
-        print("Korrekt miljö!")
-        break
-    else:
-        print("Felaktigt miljö vald försök igen:")
+            while True:
+                gissning = input("Välj en miljö: ")
 
-ny_roll = input("Välj en roll: ")
-ny_adress = input("Välj en adress: ")
+                if gissning in giltiga_miljoer:
+                    print("Korrekt miljö!")
+                    break
+                else:
+                    print("Felaktigt miljö vald försök igen:")
 
-fresh_server = {
-    "namn": nytt_namn,
-    "adress": ny_adress,
-    "miljo": gissning,
-    "roll": ny_roll,
-    "status": "unknown",
-    "senast_kontrollerad": "always"
-}
+            ny_roll = input("Välj en roll: ")
+            ny_adress = input("Välj en adress: ")
 
-namn_list.append(fresh_server)
-print("Den nya servern har lagts till! ")
-spara_servrar(namn_list)    
-exportera_till_csv(namn_list)
+            fresh_server = {
+                "namn": nytt_namn,
+                "adress": ny_adress,
+                "miljo": gissning,
+                "roll": ny_roll,
+                "status": "unknown",
+                "senast_kontrollerad": "always"
+            }
+
+            namn_list.append(fresh_server)
+            print("Den nya servern har lagts till! ")
+            spara_servrar(namn_list)
+
+        elif val == "4":
+            ta_bort = input("Vilken server vill du ta bort: ")
+            server = hitta_server(namn_list, ta_bort)
+            if server != None:
+                namn_list.remove(server)
+                spara_servrar(namn_list)
+                print("Servern har tagits bort!")
+
+        elif val == "5":
+            koll_namn = input("Vilken server vill du kontrollera: ")
+            server = hitta_server(namn_list, koll_namn)
+            if server != None:
+                kontrollera_en_server(server, namn_list)
+                print("Servern är kontrollerad!")
+
+        elif val == "6":
+            kontrollera_alla_servrar(namn_list)
+            print("Alla servrar är kontrollerade!")
+
+        elif val == "7":
+            exportera_till_csv(namn_list)
+            print("Rapport har exporterats till CSV!")
+
+        elif val == "8":
+            print("Programmet avslutas")
+            break
     
