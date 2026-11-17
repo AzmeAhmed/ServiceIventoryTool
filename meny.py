@@ -39,7 +39,7 @@ def kor_meny(namn_list):
             skriv_ut_servrar(namn_list)
 
         elif val == "2":
-            vald_miljo = input("Vilken miljö vill du se: ")
+            vald_miljo = input("Vilken miljö vill du se: ").lower()
             filtrerad = filtrera_miljo(namn_list, vald_miljo)
             skriv_ut_servrar(filtrerad)
 
@@ -62,7 +62,7 @@ def kor_meny(namn_list):
                     break
 
             while True:
-                gissning = input("Välj en miljö: ")
+                gissning = input("Välj en miljö: ").lower()
 
                 if gissning in giltiga_miljoer:
                     print("Korrekt miljö!")
@@ -92,7 +92,7 @@ def kor_meny(namn_list):
             if server != None:
                 # Extra confirmation is required before removing a prod server
                 if server["miljo"] == "prod":
-                    svar = input("Servern är i prod, är du säker (ja/nej): ")
+                    svar = input("Servern är i prod, är du säker (ja/nej): ").lower()
                     if svar == "ja":
                         namn_list.remove(server)
                         spara_servrar(namn_list)
