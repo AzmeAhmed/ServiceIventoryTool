@@ -33,7 +33,7 @@ def exportera_till_csv(namn_list):
         os.makedirs("rapporter")
         
     nu = datetime.now()
-    tid = str(nu.year) + "-" + str(nu.month) + "-" + str(nu.day) + "_" + str(nu.hour) + str(nu.minute)
+    tid = nu.strftime("%Y-%m-%d_%H%M")
     csv_namn = "rapporter/inventering_" + tid + ".csv"
     
     min_fil = open(csv_namn, "w")
