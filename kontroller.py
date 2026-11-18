@@ -17,7 +17,7 @@ def kontrollera_en_server(server, namn_list):
         server["status"] = "down"
 
     nu = datetime.now()
-    tid = str(nu.year) + "-" + str(nu.month) + "-" + str(nu.day) + " " + str(nu.hour) + ":" + str(nu.minute)
+    tid = nu.strftime("%Y-%m-%d %H:%M")
     server["senast_kontrollerad"] = tid
 
     spara_servrar(namn_list)
